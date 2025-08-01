@@ -1,32 +1,26 @@
 #include <opencv2/opencv.hpp>
 #include <iostream>
 #include <string>
+#include "POV_Converter.h"
 
 using namespace std;
-using namespace cv;
 
 int main() {
-    string file_name = "../image.png";
+    POV_Converter::POV_config_t pov_config;
+    pov_config.leds = 144;
+    pov_config.sectors = 140;
+    pov_config.length = 1000;
+    pov_config.center_pos = 500;
+    pov_config.direction = false;
 
-    Mat image = imread(file_name, IMREAD_COLOR_RGB);
+    POV_Converter converter(pov_config);
 
-    if (image.empty())
-    {
-        cout << "Could not open or find the image" << endl;
-        cin.get(); //wait for any key press
-        return -1;
-    }
-
-    String windowName = "Image"; //Name of the window
-
-    namedWindow(windowName); // Create a window
-
-    imshow(windowName, image, IM); // Show our image inside the created window.
-
-    waitKey(0); // Wait for any keystroke in the window
-
-    destroyWindow(windowName); //destroy the created window
-
+    converter.loadImage("../image.png");
+    converter.showImage();
+    converter.prepareImage();
+    converter.showImage();
+    converter.convert();
+    converter.simulate();
 
     return 0;
 }
