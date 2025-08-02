@@ -4,6 +4,7 @@
 
 #include "POV_Converter.h"
 
+#include <iostream>
 #include <fstream>
 #include <format>
 
@@ -186,6 +187,40 @@ void POV_Converter::savePOVData(const std::string& filename) const {
     }
     file << "};\n";
     file.close();
+}
+
+
+void POV_Converter::runCameraLoop(int camera_id) {
+    cv::VideoCapture cap(camera_id);
+    if (!cap.isOpened()) {
+        std::cerr << "Ошибка: не удалось открыть камеру " << camera_id << std::endl;
+        return;
+    }
+    cv::Mat frame;
+     while (true) {
+        cap >> frame;
+        if (frame.empty()) break;
+
+        // Копируем кадр
+        image = frame.clone();
+
+        // Обработка
+        processImage();  // crop и recalc
+        convert();       // преобразуем в pov_data
+        simulate();      // отрисовываем симуляцию
+
+        // Показываем обрезанное изображение
+        cv::imshow("Camera Input (cropped)", image);
+
+        // Показываем симуляцию POV
+        cv::imshow("POV Simulation", simulation);
+
+        int key = cv::waitKey(1);
+        if (key == 27) break;
+    }
+
+    cap.release();
+    cv::destroyAllWindows();
 }
 
 

@@ -21,5 +21,7 @@ int main() {
     converter.savePOVImage("../simulation.png");
     converter.savePOVData("../pov_data.txt");
 
+    converter.runCameraLoop(0);
+
     return 0;
 }
