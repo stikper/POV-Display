@@ -1,13 +1,12 @@
 #include <esp_log.h>
-#include <LED_Strip.h>
 #include <freertos/FreeRTOS.h>
 
 #include "LED_Strip.h"
+#include "Tachometer.h"
 
 static auto TAG = "POV_Controller";
 
 // Animation, 144 steps
-
 void animateRainbow(LED_Strip::HSV_Color *buffer, int step = 0) {
     for (int i = 0; i < 144; i++) {
         buffer[(i + step) % 144].hue = (int)((float) i / 144.0f * 255) % 255;
@@ -36,9 +35,6 @@ void animateRainbowVibe(LED_Strip::RGB_Color *buffer, int step = 0) {
     }
 }
 
-
-
-
 void solidColor(LED_Strip::RGB_Color *buffer, LED_Strip::RGB_Color color) {
     for (int i = 0; i < 144; i++) {
         buffer[i].red = color.red;
@@ -53,8 +49,6 @@ extern "C" [[noreturn]] void app_main()
     LED_Strip strip(144);
     strip.init();
     strip.set_default_global(1); // n/31
-
-
 
     /*
     LED_Strip::RGB_Color buffer[144] = {};
