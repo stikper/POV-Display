@@ -11,7 +11,7 @@
 #include "driver/gpio.h"
 #include "esp_err.h"
 
-#define LED_STRIP_BUFFER_SIZE 145
+#define LED_STRIP_BUFFER_SIZE 144
 
 #define LED_STRIP_SPI_BUS SPI3_HOST
 #define LED_STRIP_SDI GPIO_NUM_23

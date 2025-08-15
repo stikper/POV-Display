@@ -3,6 +3,7 @@
 
 #include "LED_Strip.h"
 #include "Tachometer.h"
+#include "POV_Display.h"
 
 static auto TAG = "POV_Controller";
 
