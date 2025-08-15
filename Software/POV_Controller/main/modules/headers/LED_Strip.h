@@ -6,9 +6,7 @@
 #ifndef LED_STRIP_H
 #define LED_STRIP_H
 
-#include <cstdint>
 #include "driver/spi_master.h"
-#include "driver/gpio.h"
 #include "esp_err.h"
 
 #define LED_STRIP_BUFFER_SIZE 144

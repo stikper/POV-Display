@@ -47,7 +47,7 @@ void Tachometer::stop() {
     isRunning = false;
 }
 
-void IRAM_ATTR Tachometer::isrHallPosEdge(void *arg) {
+void Tachometer::isrHallPosEdge(void *arg) {
     BaseType_t xHigherPriorityTaskWoken = pdFALSE;
     auto *tachometer = static_cast<Tachometer *>(arg);
 

@@ -4,6 +4,8 @@
 
 #include "LED_Strip.h"
 
+#include "driver/gpio.h"
+
 
 const char* LED_Strip::TAG = "LED_Strip";
 
@@ -24,8 +26,6 @@ LED_Strip::~LED_Strip() = default;
 
 
 esp_err_t LED_Strip::init() {
-    esp_err_t ret;
-
     spi_bus_config_t bus_cfg = {};
     bus_cfg.miso_io_num = -1;
     bus_cfg.mosi_io_num = LED_STRIP_SDI;
@@ -33,7 +33,7 @@ esp_err_t LED_Strip::init() {
     bus_cfg.quadwp_io_num = -1,
     bus_cfg.quadhd_io_num = -1,
     bus_cfg.max_transfer_sz = SOC_SPI_MAXIMUM_BUFFER_SIZE;
-    ret = spi_bus_initialize(LED_STRIP_SPI_BUS, &bus_cfg, SPI_DMA_CH_AUTO);
+    esp_err_t ret = spi_bus_initialize(LED_STRIP_SPI_BUS, &bus_cfg, SPI_DMA_CH_AUTO);
     if (ret != ESP_OK) return ret;
 
     spi_device_interface_config_t dev_cfg = {};

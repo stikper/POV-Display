@@ -41,7 +41,7 @@ public:
     void init();
     void stop();
 
-    std::pair<int64_t, int64_t> getData() const;
+    [[nodiscard]] std::pair<int64_t, int64_t> getData() const;
 };
 
 

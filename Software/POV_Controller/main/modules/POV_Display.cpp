@@ -58,10 +58,20 @@ void POV_Display::update(void *arg) {
         auto t = esp_timer_get_time();
         auto [w, t0] = display->tachometer.getData();
         auto w_one = w / num_sectors;
+        if (w_one == 0) {
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+            continue;
+        }
         auto sector_next = static_cast<int>((t - t0) / w_one + 1);
         int64_t time_until_sector_next = t0 + w_one * sector_next - t;
-        if (time_until_sector_next < 0) continue;
-        if (time_until_sector_next > 1000000) continue;;
+        if (time_until_sector_next < 0) {
+            vTaskDelay(1);
+            continue;
+        }
+        if (time_until_sector_next > 1000000) {
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+            continue;
+        }
         sector_next %= num_sectors;
 
         gptimer_alarm_config_t alarm_config = {};
