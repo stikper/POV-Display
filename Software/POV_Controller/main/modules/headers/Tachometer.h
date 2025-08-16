@@ -15,7 +15,7 @@
 #include <esp_log.h>
 
 #define HALL_SENSOR_GPIO GPIO_NUM_4
-#define TACHOMETER_BUFFER_SIZE 10
+#define TACHOMETER_BUFFER_SIZE 3
 
 class Tachometer {
     bool isRunning;
