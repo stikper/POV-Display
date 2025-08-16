@@ -36,6 +36,8 @@ std::pair<double, double> POV_Converter::getLedPos(int led_num, int sector_num) 
     double coords_from_first_led = led_num * led2mm;
     double coords_from_center = coords_from_first_led - config.center_pos;
 
+    if (config.first_on_hall_side) coords_from_center *= -1;
+
     std::pair<double, double> result;
     result.first = coords_from_center * cos(angle) + POV_diameter / 2;
     result.second = -1 * coords_from_center * sin(angle) + POV_diameter / 2;

@@ -10,6 +10,7 @@ int main() {
     pov_config.direction = false;
     pov_config.length = 1000;
     pov_config.center_pos = 500;
+    pov_config.first_on_hall_side = true;
 
     POV_Converter converter(pov_config);
 
