@@ -178,12 +178,12 @@ void POV_Converter::savePOVData(const std::string& filename) const {
     std::ofstream file(filename);
     file << std::format("const uint8_t pov_data[{}][{}][3] = {{", config.sectors, config.leds) << "\n";
     for (int i = 0; i < config.sectors; i++) {
-        file << "  {\n";
+        file << "    {\n";
         for (int j = 0; j < config.leds; j++) {
-            file << std::format("    {{{}, {}, {}}}", pov_data[i][j][2], pov_data[i][j][1], pov_data[i][j][0]);
+            file << std::format("        {{{}, {}, {}}}", pov_data[i][j][2], pov_data[i][j][1], pov_data[i][j][0]);
             file << ",\n";
         }
-        file << "  },\n";
+        file << "    },\n";
     }
     file << "};\n";
     file.close();
