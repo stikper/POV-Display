@@ -12,7 +12,7 @@ const char* LED_Strip::TAG = "LED_Strip";
 LED_Strip::LED_Strip(int num_leds) : buffer{}, tx_buffer{} {
     if (num_leds > LED_STRIP_BUFFER_SIZE) num_leds = LED_STRIP_BUFFER_SIZE;
     this->num_leds = num_leds;
-    default_global = 0b00011110;
+    default_global = 0b00000010;
     for (auto & i : buffer) {
         i.global = default_global;
         i.red = 0;
