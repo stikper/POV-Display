@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     POV_Converter::POV_config_t pov_config;
     pov_config.leds = 144;
-    pov_config.sectors = 60;
+    pov_config.sectors = 140;
     pov_config.direction = false;
     pov_config.length = 1000;
     pov_config.center_pos = 500;

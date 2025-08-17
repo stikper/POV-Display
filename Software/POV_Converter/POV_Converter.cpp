@@ -178,7 +178,7 @@ void POV_Converter::savePOVImage(const cv::String &filename) const {
 
 void POV_Converter::savePOVData(const std::string& filename) const {
     std::ofstream file(filename);
-    file << std::format("const uint8_t pov_data[{}][{}][3] = {{", config.sectors, config.leds) << "\n";
+    file << std::format("const uint8_t POV_Display::pov_data[{}][{}][3] = {{", config.sectors, config.leds) << "\n";
     for (int i = 0; i < config.sectors; i++) {
         file << "    {\n";
         for (int j = 0; j < config.leds; j++) {
