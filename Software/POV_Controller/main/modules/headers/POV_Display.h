@@ -16,7 +16,7 @@
 
 class POV_Display {
     static constexpr int num_leds = 144;
-    static constexpr int num_sectors = 60;
+    static constexpr int num_sectors = 140;
 
     bool isRunning;
 
