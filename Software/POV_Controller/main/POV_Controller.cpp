@@ -20,7 +20,7 @@ extern "C" [[noreturn]] void app_main()
     int64_t w_min = INT64_MAX;
     while (true) {
         auto [w, t0] = display.getTachometer().getData();
-        if (w_min != 0 && w < w_min) w_min = w;
+        if (w != 0 && w < w_min) w_min = w;
         ESP_LOGI(TAG, "Max RPM is: %.3f", 60. / (static_cast<double>(w_min) / 1000000));
         ESP_LOGI(TAG, "Current RPM is: %.3f", 60. / (static_cast<double>(w) / 1000000));
         vTaskDelay(pdMS_TO_TICKS(1000)); // вывод каждую секунду
