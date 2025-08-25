@@ -52,6 +52,10 @@ void POV_Display::stop() {
     vTaskDelete(updateTask);
 }
 
+LED_Strip & POV_Display::getLEDStrip() { return ledStrip; }
+
+Tachometer & POV_Display::getTachometer() { return tachometer; }
+
 void POV_Display::update(void *arg) {
     auto *display = static_cast<POV_Display *>(arg);
     int64_t t_irpt = 0;

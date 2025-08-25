@@ -42,6 +42,9 @@ public:
 
     void start();
     void stop();
+
+    LED_Strip& getLEDStrip();
+    Tachometer& getTachometer();
 };
 
 
