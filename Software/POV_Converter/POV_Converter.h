@@ -13,7 +13,7 @@ public:
     struct POV_config_t {
         int leds = 144;
         int sectors = 140;
-        bool direction = false; // false = CCW; true = CW
+        bool direction = true; // false = CCW; true = CW
         bool first_on_hall_side = true; // false = first led in opposite side of hall sensor
         double length = 1000; // In millimeters
         double center_pos = 500; // From the first led
