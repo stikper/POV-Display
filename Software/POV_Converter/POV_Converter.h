@@ -57,6 +57,7 @@ public:
 
     void convert(); // Calculate POV data
     void simulate(); // Simulate POV
+    void radialCorrection();
 
     void showImage() const;
 

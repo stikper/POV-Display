@@ -133,6 +133,29 @@ void POV_Converter::convert() {
     }
 }
 
+void POV_Converter::radialCorrection()
+{
+    const double alpha = 2 * M_PI / config.sectors;
+    constexpr double led_radius = 1.5;
+    constexpr double led_sq = led_radius * led_radius * M_PI;
+    const double max_radius = POV_diameter / 2;
+    const double max_sq = 2 * led_radius * (alpha * max_radius) + led_sq;
+
+    std::vector<double> led_r;
+    for (int j = 0; j < config.leds; j++)
+    {
+        led_r.push_back(std::abs(leds_pos[0][j].first - POV_diameter / 2));
+    }
+
+    for (int j = 0; j < config.leds; j++) {
+        double square = 2 * led_radius * alpha * led_r[j] + led_sq;
+        double correction = square / max_sq;
+        for (int i = 0; i < config.sectors; i++) {
+            pov_data[i][j] *= correction;
+        }
+    }
+
+}
 
 
 

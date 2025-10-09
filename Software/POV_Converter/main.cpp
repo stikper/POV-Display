@@ -19,6 +19,9 @@ int main() {
     converter.convert();
     converter.simulate();
     converter.showPOV();
+    converter.radialCorrection();
+    converter.simulate();
+    converter.showPOV();
     converter.savePOVImage("../simulation.png");
     converter.savePOVData("../pov_data.txt");
 
