@@ -38,13 +38,13 @@ private:
 
     void init();
 
-    std::pair<double, double> getLedPos(int led_num, int sector_num) const; // coords, mm (from the top left corner)
-    std::vector<std::pair<double, double> > getLineLedsPos(int sector_num) const;
+    [[nodiscard]] std::pair<double, double> getLedPos(int led_num, int sector_num) const; // coords, mm (from the top left corner)
+    [[nodiscard]] std::vector<std::pair<double, double> > getLineLedsPos(int sector_num) const;
 
     void calcLedsPos(); // Calculate in mm coords
     void recalcLedsPosPix(); // Calculate in pixel coords
 
-    cv::Vec3b getPixel(std::pair<double, double> pos) const;
+    [[nodiscard]] cv::Vec3b getPixel(const std::pair<double, double>& pos) const;
 
     void processImage();
 

@@ -10,6 +10,9 @@
 
 POV_Converter::POV_Converter(const POV_config_t& cfg) {
     config = cfg;
+    POV_diameter = -1;
+    led2mm = -1;
+    mm2pix = -1;
     init();
 }
 
@@ -69,7 +72,7 @@ void POV_Converter::recalcLedsPosPix() {
     }
 }
 
-cv::Vec3b POV_Converter::getPixel(std::pair<double, double> pos) const {
+cv::Vec3b POV_Converter::getPixel(const std::pair<double, double>& pos) const {
     int x1 = floor(pos.first);
     int y1 = floor(pos.second);
     int x2 = x1 + 1;
@@ -135,11 +138,11 @@ void POV_Converter::convert() {
 
 void POV_Converter::simulate() {
     int upscale_factor = 4;
-    int img_size = POV_diameter * upscale_factor;
+    int img_size = static_cast<int>(POV_diameter) * upscale_factor;
 
-    constexpr int dot_radius_mm = 1.5;
-    const int dot_radius_pix = std::max(1, dot_radius_mm * upscale_factor);
-    int border_size = POV_diameter / 10;
+    constexpr double dot_radius_mm = 1.5;
+    const int dot_radius_pix = std::max(1, static_cast<int>(dot_radius_mm * upscale_factor));
+    int border_size = static_cast<int>(POV_diameter) / 10;
     img_size += border_size * 2;
     simulation = cv::Mat::zeros(img_size, img_size, CV_8UC3);
 
@@ -161,6 +164,7 @@ void POV_Converter::simulate() {
 void POV_Converter::showImage() const {
     cv::namedWindow("POV Converter image", cv::WINDOW_KEEPRATIO);
     cv::imshow("POV Converter image", image);
+    cv::waitKey(10);
     cv::resizeWindow("POV Converter image", 1000, 1000);
     cv::waitKey(0);
 }
@@ -168,6 +172,7 @@ void POV_Converter::showImage() const {
 void POV_Converter::showPOV() const {
     cv::namedWindow("POV Simulation", cv::WINDOW_KEEPRATIO);
     cv::imshow("POV Simulation", simulation);
+    cv::waitKey(10);
     cv::resizeWindow("POV Simulation", 1000, 1000);
     cv::waitKey(0);
 }
@@ -203,18 +208,18 @@ void POV_Converter::runCameraLoop(int camera_id) {
         cap >> frame;
         if (frame.empty()) break;
 
-        // Копируем кадр
+        // Copying frame
         image = frame.clone();
 
-        // Обработка
-        processImage();  // crop и recalc
-        convert();       // преобразуем в pov_data
-        simulate();      // отрисовываем симуляцию
+        // Processing
+        processImage();  // Crop и Recalc
+        convert();       // Process pov_data
+        simulate();      // Show simulation
 
-        // Показываем обрезанное изображение
+        // Show cropped image
         cv::imshow("Camera Input (cropped)", image);
 
-        // Показываем симуляцию POV
+        // Show POV simulation
         cv::imshow("POV Simulation", simulation);
 
         int key = cv::waitKey(1);
