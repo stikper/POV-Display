@@ -21,8 +21,8 @@ class Tachometer {
     bool isRunning;
 
     int64_t cycle_buffer[TACHOMETER_BUFFER_SIZE];
-    int64_t time_sub;
-    double k, b; // time = k * angle + b
+    int64_t time_sub; // To make first event time=0
+    double k, b; // time = k * angle + b; [time] = us, [angle] = rad/2_PI
 
     SemaphoreHandle_t dataMutex;
     QueueHandle_t hallPosEdgeQueue;

@@ -19,6 +19,7 @@ Tachometer::Tachometer() : cycle_buffer{} {
 }
 
 Tachometer::~Tachometer() {
+    stop();
     vSemaphoreDelete(dataMutex);
     vQueueDelete(hallPosEdgeQueue);
 }
@@ -114,9 +115,9 @@ void Tachometer::calculateData() {
 std::pair<int64_t, int64_t> Tachometer::getData() const {
     std::pair<int64_t, int64_t> result = {};
     if (xSemaphoreTake(dataMutex, portMAX_DELAY) == pdTRUE) {
-        auto w = static_cast<int64_t>(k);
-        auto t0 = static_cast<int64_t>(k * (TACHOMETER_BUFFER_SIZE - 1) + b) + time_sub;
-        result.first = w;
+        auto T = static_cast<int64_t>(k);
+        auto t0 = time_sub + static_cast<int64_t>(k * (TACHOMETER_BUFFER_SIZE - 1) + b);
+        result.first = T;
         result.second = t0;
         xSemaphoreGive(dataMutex);
     }

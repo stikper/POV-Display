@@ -62,15 +62,15 @@ void POV_Display::update(void *arg) {
     bool timer_enabled = false;
 
     while (true) {
+        auto [T, t0] = display->tachometer.getData();
         auto t = esp_timer_get_time();
-        auto [w, t0] = display->tachometer.getData();
-        auto w_one = w / num_sectors;
-        if (w_one == 0) {
+        auto T_one = T / num_sectors; // Time for one sector in microseconds
+        if (T_one == 0) {
             vTaskDelay(1000 / portTICK_PERIOD_MS);
             continue;
         }
-        auto sector_next = static_cast<int>((t - t0) / w_one + 1);
-        int64_t time_until_sector_next = t0 + w_one * sector_next - t;
+        auto sector_next = static_cast<int>((t - t0) / T_one + 1);
+        int64_t time_until_sector_next = t0 + T_one * sector_next - t;
         if (time_until_sector_next < 0) {
             vTaskDelay(1);
             continue;

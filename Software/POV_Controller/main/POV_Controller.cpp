@@ -17,12 +17,12 @@ extern "C" [[noreturn]] void app_main()
     ESP_LOGI(TAG, "Starting POV display controller");
     display.start();
 
-    int64_t w_min = INT64_MAX;
+    int64_t T_min = INT64_MAX;
     while (true) {
-        auto [w, t0] = display.getTachometer().getData();
-        if (w != 0 && w < w_min) w_min = w;
-        ESP_LOGI(TAG, "Max RPM is: %.3f", 60. / (static_cast<double>(w_min) / 1000000));
-        ESP_LOGI(TAG, "Current RPM is: %.3f", 60. / (static_cast<double>(w) / 1000000));
+        auto [T, t0] = display.getTachometer().getData();
+        if (T != 0 && T < T_min) T_min = T;
+        ESP_LOGI(TAG, "Max RPM is: %.3f", 60. / (static_cast<double>(T_min) / 1000000));
+        ESP_LOGI(TAG, "Current RPM is: %.3f", 60. / (static_cast<double>(T) / 1000000));
         vTaskDelay(pdMS_TO_TICKS(1000)); // вывод каждую секунду
     }
 }
