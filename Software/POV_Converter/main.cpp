@@ -6,7 +6,7 @@ using namespace std;
 int main() {
     POV_Converter::POV_config_t pov_config;
     pov_config.leds = 144;
-    pov_config.sectors = 140;
+    pov_config.sectors = 250;
     pov_config.direction = true;
     pov_config.length = 1000;
     pov_config.center_pos = 500;
@@ -14,7 +14,7 @@ int main() {
 
     POV_Converter converter(pov_config);
 
-    converter.loadImage("../images/image.png");
+    converter.loadImage("../images/image.jpg");
     converter.showImage();
     converter.convert();
     converter.simulate();
